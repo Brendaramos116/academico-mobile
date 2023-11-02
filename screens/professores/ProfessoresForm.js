@@ -5,16 +5,19 @@ import { Button, Text, TextInput } from 'react-native-paper'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Formik } from 'formik'
 import professorValidator from '../../validators/professorValidator'
+import { mask } from 'remask'
 
 const ProfessoresForm = ({ navigation, route }) => {
 
   let professor = {
     nome: '',
+    cpf:'',
     matricula: '',
     salario: '',
     email: '',
     telefone: '',
     cep: '',
+    complemento: '',
     logradouro: '',
     numero: '',
     bairro: '',
@@ -52,7 +55,7 @@ const ProfessoresForm = ({ navigation, route }) => {
         <Text>Fomulário Professores</Text>
 
         <Formik
-          initialValues={curso}
+          initialValues={professor}
           validationSchema={professorValidator}
           onSubmit={values => salvar(values)}
         >
@@ -72,7 +75,7 @@ const ProfessoresForm = ({ navigation, route }) => {
                 mode='outlined'
                 keyboardType='decimal-pad'
                 value={values.cpf}
-                onChangeText={handleChange('cpf')}
+                onChangeText={(value) => { setFieldValue('cpf', mask(value, '999.999.999-99')) }}
               />
 
               <TextInput
@@ -106,7 +109,7 @@ const ProfessoresForm = ({ navigation, route }) => {
                 style={{ marginTop: 10 }}
                 mode='outlined'
                 value={values.telefone}
-                onChangeText={handleChange('telefone')}
+                onChangeText={(value) => { setFieldValue('telefone', mask(value, '(99) 99999-9999')) }}
               />
 
               <TextInput
@@ -114,7 +117,7 @@ const ProfessoresForm = ({ navigation, route }) => {
                 style={{ marginTop: 10 }}
                 mode='outlined'
                 value={values.cep}
-                onChangeText={handleChange('cep')}
+                onChangeText={(value) => { setFieldValue('cep', mask(value, '99.999-999')) }}
               />
 
               <TextInput

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "academico-mobile",
-    "slug": "academico-mobile",
+    "name": "academico",
+    "slug": "academico",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

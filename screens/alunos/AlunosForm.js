@@ -10,20 +10,22 @@ const AlunosForm = ({ navigation, route }) => {
 
   let aluno = {
     nome: '',
+    cpf: '',
     matricula: '',
     email: '',
     telefone: '',
     cep: '',
     logradouro: '',
+    complemento: '',
     numero: '',
     bairro: '',
   }
 
   const id = route.params?.id
 
-  if(id >= 0){    
-     aluno = route.params?.aluno 
-  }  
+  if (id >= 0) {
+    aluno = route.params?.aluno
+  }
 
   function salvar(dados) {
     AsyncStorage.getItem('alunos').then(resultado => {
@@ -63,6 +65,12 @@ const AlunosForm = ({ navigation, route }) => {
                 onChangeText={handleChange('nome')}
               />
 
+              {(errors.nome && touched.nome) &&
+                <Text style={{ color: 'red', marginTop: 5 }}>
+                  {errors.nome}
+                </Text>
+              }
+
               <TextInput
                 label='CPF'
                 style={{ marginTop: 10 }}
@@ -72,6 +80,11 @@ const AlunosForm = ({ navigation, route }) => {
                 onChangeText={(value) => { setFieldValue('cpf', mask(value, '999.999.999-99')) }}
               />
 
+              {(errors.cpf && touched.cpf) &&
+                <Text style={{ color: 'red', marginTop: 5 }}>
+                  {errors.cpf}
+                </Text>
+              }
               <TextInput
                 label='Matrícula'
                 style={{ marginTop: 10 }}
@@ -94,7 +107,7 @@ const AlunosForm = ({ navigation, route }) => {
                 style={{ marginTop: 10 }}
                 mode='outlined'
                 value={values.telefone}
-                onChangeText={handleChange('telefone')}
+                onChangeText={(value) => { setFieldValue('telefone', mask(value, '(99) 99999-9999')) }}
               />
 
               <TextInput
@@ -102,7 +115,7 @@ const AlunosForm = ({ navigation, route }) => {
                 style={{ marginTop: 10 }}
                 mode='outlined'
                 value={values.cep}
-                onChangeText={handleChange('cep')}
+                onChangeText={(value) => { setFieldValue('cep', mask(value, '99.999-999')) }}
               />
 
               <TextInput
