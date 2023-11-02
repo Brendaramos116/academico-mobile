@@ -6,14 +6,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Formik } from 'formik'
 import { Picker } from '@react-native-picker/picker'
 import disciplinaValidator from '../../validators/disciplinaValidator'
+import Validacao from '../../components/Validacao'
 
 const DisciplinasForm = ({ navigation, route }) => {
-  let curso = {
+
+  let disciplina = {
     nome: '',
     curso_id: '',
   }
 
   const [cursos, setCursos] = useState([])
+
+  const id = route.params?.id
 
   if (id >= 0) {
     disciplina = route.params?.disciplina
@@ -21,17 +25,15 @@ const DisciplinasForm = ({ navigation, route }) => {
 
   useEffect(() => {
     AsyncStorage.getItem('cursos').then(resultado => {
-
       resultado = JSON.parse(resultado) || []
-
       setCursos(resultado)
     })
   }, [])
-  const id = route.params?.id
 
-  
+  console.log(cursos)
 
   function salvar(dados) {
+
     AsyncStorage.getItem('disciplinas').then(resultado => {
 
       const disciplinas = JSON.parse(resultado) || []
@@ -42,8 +44,6 @@ const DisciplinasForm = ({ navigation, route }) => {
         disciplinas.push(dados)
       }
 
-      console.log(disciplinas)
-
       AsyncStorage.setItem('disciplinas', JSON.stringify(disciplinas))
 
       navigation.goBack()
@@ -51,49 +51,46 @@ const DisciplinasForm = ({ navigation, route }) => {
   }
 
   return (
-    <>
-      <ScrollView style={{ margin: 15 }}>
-        <Text>Fomulário Disciplina</Text>
+    <ScrollView style={{ margin: 15 }}>
+      <Text>Formulário de Disciplina</Text>
 
-        <Formik
-          initialValues={curso}
-          validationSchema={disciplinaValidator}
-          onSubmit={values => salvar(values)}
-        >
-          {({ values, handleChange, handleSubmit, errors, touched, setFieldValue }) => (
-            <View>
-              <TextInput
-                label='Nome'
-                style={{ marginTop: 10 }}
-                mode='outlined'
-                value={values.nome}
-                onChangeText={handleChange('nome')}
-              />
+      <Formik
+        initialValues={disciplina}
+        validationSchema={disciplinaValidator}
+        onSubmit={values => salvar(values)}
+      >
+        {({ values, handleChange, handleSubmit, errors, touched, setFieldValue }) => (
+          <View>
 
-              <Picker
-                style={{ marginTop: 10 }}
-                selectedValue={values.curso_id}
-                onValueChange={handleChange('curso_id')}>
-                <Picker.Item label="Curso" value="" />
-                {cursos.map((item, i) => (
-                  <Picker.Item key={i}
-                    label={item.nome}
-                    value={item.nome} />
-                ))}
-              </Picker>
+            <TextInput
+              style={{ marginTop: 10 }}
+              mode='outlined'
+              label='Nome'
+              value={values.nome}
+              onChangeText={handleChange('nome')}
+            />
+            <Validacao errors={errors.nome} touched={touched.nome} />
 
-              {(errors.curso_id && touched.curso_id) &&
-                <Text style={{ color: 'red', marginTop: 5 }}>
-                  {errors.curso_id}
-                </Text>
-              }
+            <Picker
+              selectedValue={values.curso_id}
+              onValueChange={handleChange('curso_id')}>
+              <Picker.Item label="Curso" value="" />
+              {cursos.map((item, i) => (
+                <Picker.Item key={i}
+                  label={item.nome}
+                  value={item.nome}
+                />
+              ))}
+            </Picker>
+            <Validacao errors={errors.curso_id} touched={touched.curso_id} />
 
-              <Button onPress={handleSubmit}>Salvar</Button>
-            </View>
-          )}
-        </Formik>
-      </ScrollView>
-    </>
+            <Button onPress={handleSubmit}>Salvar</Button>
+          </View>
+        )}
+
+      </Formik>
+
+    </ScrollView>
   )
 }
 

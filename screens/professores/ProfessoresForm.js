@@ -5,16 +5,20 @@ import { Button, Text, TextInput } from 'react-native-paper'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Formik } from 'formik'
 import professorValidator from '../../validators/professorValidator'
+import Validacao from '../../components/Validacao'
+import { mask } from 'remask'
 
 const ProfessoresForm = ({ navigation, route }) => {
 
   let professor = {
     nome: '',
+    cpf:'',
     matricula: '',
     salario: '',
     email: '',
     telefone: '',
     cep: '',
+    complemento: '',
     logradouro: '',
     numero: '',
     bairro: '',
@@ -52,7 +56,7 @@ const ProfessoresForm = ({ navigation, route }) => {
         <Text>Fomulário Professores</Text>
 
         <Formik
-          initialValues={curso}
+          initialValues={professor}
           validationSchema={professorValidator}
           onSubmit={values => salvar(values)}
         >
@@ -65,6 +69,7 @@ const ProfessoresForm = ({ navigation, route }) => {
                 value={values.nome}
                 onChangeText={handleChange('nome')}
               />
+              <Validacao errors={errors.nome} touched={touched.nome} />
 
               <TextInput
                 label='CPF'
@@ -72,8 +77,9 @@ const ProfessoresForm = ({ navigation, route }) => {
                 mode='outlined'
                 keyboardType='decimal-pad'
                 value={values.cpf}
-                onChangeText={handleChange('cpf')}
+                onChangeText={(value) => { setFieldValue('cpf', mask(value, '999.999.999-99')) }}
               />
+               <Validacao errors={errors.cpf} touched={touched.cpf} />
 
               <TextInput
                 label='Matrícula'
@@ -83,6 +89,7 @@ const ProfessoresForm = ({ navigation, route }) => {
                 value={values.matricula}
                 onChangeText={handleChange('matricula')}
               />
+              <Validacao errors={errors.matricula} touched={touched.matricula} />
 
               <TextInput
                 label='Salário'
@@ -92,7 +99,7 @@ const ProfessoresForm = ({ navigation, route }) => {
                 value={values.salario}
                 onChangeText={handleChange('salario')}
               />
-
+              <Validacao errors={errors.matricula} touched={touched.matricula} />
               <TextInput
                 label='E-mail'
                 style={{ marginTop: 10 }}
@@ -100,22 +107,25 @@ const ProfessoresForm = ({ navigation, route }) => {
                 value={values.email}
                 onChangeText={handleChange('email')}
               />
+              <Validacao errors={errors.email} touched={touched.email} />
 
               <TextInput
                 label='Telefone'
                 style={{ marginTop: 10 }}
                 mode='outlined'
                 value={values.telefone}
-                onChangeText={handleChange('telefone')}
+                onChangeText={(value) => { setFieldValue('telefone', mask(value, '(99) 99999-9999')) }}
               />
+              <Validacao errors={errors.telefone} touched={touched.telefone} />
 
               <TextInput
                 label='CEP'
                 style={{ marginTop: 10 }}
                 mode='outlined'
                 value={values.cep}
-                onChangeText={handleChange('cep')}
+                onChangeText={(value) => { setFieldValue('cep', mask(value, '99.999-999')) }}
               />
+              <Validacao errors={errors.cep} touched={touched.cep} />
 
               <TextInput
                 label='Logradouro'
@@ -124,6 +134,7 @@ const ProfessoresForm = ({ navigation, route }) => {
                 value={values.logradouro}
                 onChangeText={handleChange('logradouro')}
               />
+              <Validacao errors={errors.logradouro} touched={touched.logradouro} />
 
               <TextInput
                 label='Complemento'
@@ -132,14 +143,16 @@ const ProfessoresForm = ({ navigation, route }) => {
                 value={values.complemento}
                 onChangeText={handleChange('complemento')}
               />
+              <Validacao errors={errors.complemento} touched={touched.complemento} />
 
               <TextInput
                 label='Número'
                 style={{ marginTop: 10 }}
-                mode='outlined'
+                mode='outlined'       
                 value={values.numero}
                 onChangeText={handleChange('numero')}
               />
+              <Validacao errors={errors.numero} touched={touched.numero} />
 
               <TextInput
                 label='Bairro'
@@ -148,6 +161,7 @@ const ProfessoresForm = ({ navigation, route }) => {
                 value={values.bairro}
                 onChangeText={handleChange('bairro')}
               />
+              <Validacao errors={errors.bairro} touched={touched.bairro} />
 
               <Button onPress={handleSubmit}>Salvar</Button>
             </View>
