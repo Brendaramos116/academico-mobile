@@ -7,7 +7,6 @@ import cursoValidator from '../../validators/cursoValidator'
 import { Picker } from '@react-native-picker/picker'
 import Validacao from '../../components/Validacao'
 
-
 const CursosForm = ({ navigation, route }) => {
 
   let curso = {
@@ -44,7 +43,6 @@ const CursosForm = ({ navigation, route }) => {
     })
 
   }
-
 
   return (
     <>

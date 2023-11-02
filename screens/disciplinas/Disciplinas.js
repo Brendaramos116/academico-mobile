@@ -2,7 +2,7 @@ import { useFocusEffect } from '@react-navigation/native'
 import React, { useState } from 'react'
 import { Button, Card, Dialog, FAB, IconButton, Portal, Text } from 'react-native-paper'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { ScrollView } from 'react-native-web'
+import { ScrollView } from 'react-native'
 
 const Disciplinas = ({ navigation }) => {
 

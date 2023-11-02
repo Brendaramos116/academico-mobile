@@ -7,7 +7,6 @@ import { mask } from 'remask'
 import Validacao from '../../components/Validacao'
 import alunoValidator from '../../validators/alunoValidator'
 
-
 const AlunosForm = ({ navigation, route }) => {
 
   let aluno = {

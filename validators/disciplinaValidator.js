@@ -7,7 +7,7 @@ const disciplinaValidator = Yup.object().shape({
     .max(50, 'Valor muito grande')
     .required('Campo obrigatório'),
 
-  curso_id: Yup.string().required()
+  curso_id: Yup.string().required('Campo obrigatório')
 })
 
 export default disciplinaValidator
